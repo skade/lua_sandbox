@@ -138,6 +138,7 @@ local function nginx_lookup_grammar(var)
     return g
 end
 
+local dash_for_zero_length = l.P"-" / {["-"] = {value = 0, representation = "B"}}
 
 local apache_format_variables = {
  ["%"] = l.P"%"
@@ -166,9 +167,9 @@ local apache_format_variables = {
    , v = l.Cg(host, "server_name")
    , V = l.Cg(host, "server_name")
    , X = l.Cg(l.S"X+-", "connection_status")
-   , I = l.Cg(nginx_format_variables["request_length"], "request_length")
-   , O = l.Cg(nginx_format_variables["request_length"], "response_length")
-   , S = l.Cg(nginx_format_variables["request_length"], "total_length")
+   , I = l.Cg(nginx_format_variables["request_length"] + dash_for_zero_length, "request_length")
+   , O = l.Cg(nginx_format_variables["request_length"] + dash_for_zero_length, "response_length")
+   , S = l.Cg(nginx_format_variables["request_length"] + dash_for_zero_length, "total_length")
 }
 
 local function port_format(a)
