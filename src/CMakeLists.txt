@@ -12,6 +12,9 @@ set ( CMAKE_SKIP_BUILD_RPATH FALSE CACHE STRING "" FORCE )
 set ( CMAKE_BUILD_WITH_INSTALL_RPATH FALSE CACHE STRING "" FORCE )
 
 add_library(luasandbox SHARED ${LUA_SANDBOX_SRC})
+add_library(luasandbox_static STATIC ${LUA_SANDBOX_SRC})
+
+set_target_properties(luasandbox_static PROPERTIES OUTPUT_NAME luasandbox)
 
 add_dependencies(lua_bloom_filter luasandbox)
 add_dependencies(lua_circular_buffer luasandbox)
